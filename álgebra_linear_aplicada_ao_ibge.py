@@ -237,3 +237,14 @@ plt.show()
 limites = df_consolidado.groupby('Cluster')[['Valor', 'Taxa de Desocupação']].agg(['min', 'max'])
 print(limites)
 
+analise_perfil = df_consolidado.groupby('Cluster')[['Valor', 'Taxa de Desocupação', 'Gini', 'Escolaridade']].mean()
+contagem = df_consolidado.groupby('Cluster')['Município'].count()
+analise_perfil['qtd_municipios'] = contagem
+
+print("DNA dos Clusters (Médias):")
+print(analise_perfil)
+
+for cluster in sorted(df_consolidado['Cluster'].unique()):
+    print(f"\n--- Cidades no Cluster {cluster} ---")
+    cidades = df_consolidado[df_consolidado['Cluster'] == cluster]['Município'].tolist()
+    print(", ".join(cidades))
